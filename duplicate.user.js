@@ -65,7 +65,7 @@ function start(){
                                     let vval = DLock.thevalue(item);
                                     if (vval != undefined) {
                                         item=item.replace(/_(.*)/,'_\\{$1\\}')
-                                        var re = new RegExp('(?<![a-z\\_\{])'+item+'(?![a-z])', "g")
+                                        var re = new RegExp('(?<![a-z\\_\{])'+item+'(?![a-z_\}])', "g")
                                         finalstr = finalstr.replace(re, '\\left(' + vval.toString() + '\\right)')
                                     }
                                 });

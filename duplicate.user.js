@@ -72,6 +72,13 @@ function start(){
                                 return (finalstr)
                             }
                         }
+                    }else if(vard._constantValue){
+                        var regressed=vard._constantValue;
+                        if (typeof(regressed)=='number'){
+                            return(regressed)
+                        }else{
+                            return(regressed.n)
+                        }
                     }
                 }
 

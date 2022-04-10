@@ -5,8 +5,8 @@
 // @description Duplicate expressions to what they compile to!
 // @grant       none
 // @match       https://*.desmos.com/calculator*
-// @downloadURL https://github.com/MathEnthusiast314/desmos-history/blob/main/history-from-hashtag.user.js
-// @updateURL https://github.com/MathEnthusiast314/desmos-history/blob/main/history-from-hashtag.user.js
+// @downloadURL https://github.com/MathEnthusiast314/DesmosLockNotLock/blob/main/duplicate.user.js
+// @updateURL https://github.com/MathEnthusiast314/DesmosLockNotLock/blob/main/duplicate.user.js
 // ==/UserScript==
 
 (function() {

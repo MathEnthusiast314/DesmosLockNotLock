@@ -5,8 +5,8 @@
 // @description Duplicate expressions to what they compile to!
 // @grant       none
 // @match       https://*.desmos.com/calculator*
-// @downloadURL https://github.com/MathEnthusiast314/DesmosLockNotLock/blob/main/duplicate.user.js
-// @updateURL https://github.com/MathEnthusiast314/DesmosLockNotLock/blob/main/duplicate.user.js
+// @downloadURL https://github.com/MathEnthusiast314/desmos-history/blob/main/history-from-hashtag.user.js
+// @updateURL https://github.com/MathEnthusiast314/desmos-history/blob/main/history-from-hashtag.user.js
 // ==/UserScript==
 
 (function() {
@@ -34,10 +34,10 @@ function start(){
                 return context;
             }
 
-            DLock.thevalue =function (variable0) {
+            DLock.thevalue =function (variable0,first=false) {
                 var ctx = DLock.computeContext()
                 var vard = ''
-                if (typeof(variable0) == 'number') {
+                if (first) {
                     vard = ctx.analysis[variable0].rawTree
                 } else {
                     vard = ctx.frame[variable0]
@@ -45,11 +45,14 @@ function start(){
                 if (vard) {
                     if (vard.userData) {
                         var Depend = vard._dependencies.filter((e) => !vard._dummyDependencies.includes(e) && (e.includes('_') || (e.length == 1 && e != 'e')))
-                        var removeeq = new RegExp(vard._symbol + ' *= *(.*)', "g")
+                        var varname=vard._symbol
+                        if (varname){
+                            varname=varname.replace(/_(.*)/,'_\\{$1\\}')
+                        }
+                        var removeeq = new RegExp(varname + ' *= *(.*)', "g")
                         var matched = Array.from(vard._inputSpan.input.matchAll(removeeq))
                         let finalstr;
-                        console.log(matched);
-                        if (matched.length==0&&typeof(variable0) == 'number'){
+                        if (matched.length==0&&first){
                             finalstr=vard._inputSpan.input
                         }else if (matched.length>0){
                             finalstr = matched[0][1]
@@ -61,6 +64,7 @@ function start(){
                                 Depend.forEach(function(item, index) {
                                     let vval = DLock.thevalue(item);
                                     if (vval != undefined) {
+                                        item=item.replace(/_(.*)/,'_\\{$1\\}')
                                         var re = new RegExp(item, "g")
                                         finalstr = finalstr.replace(re, '\\left(' + vval.toString() + '\\right)')
                                     }
@@ -82,7 +86,7 @@ function start(){
 					return
 				}
 				var expr = DLock.getExpression(selected);
-				expr.latex = DLock.thevalue(Number(selected));
+				expr.latex = DLock.thevalue((selected),true);
 				expr.id = "new" + (new Date()).getTime();
 				Calc.setExpression(expr);
 			}

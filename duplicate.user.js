@@ -92,10 +92,9 @@ function start(){
 					window.alert("Please select an expression");
 					return
 				}
-				var expr = DLock.getExpression(selected);
-				expr.latex = DLock.thevalue((selected),true);
-				expr.id = "new" + (new Date()).getTime();
-				Calc.setExpression(expr);
+				saveid=Calc.controller.__nextItemId
+				Calc.controller.dispatch({type: "duplicate-expression",id:Calc.selectedExpressionId});
+				Calc.setExpression({id:saveid,latex:DLock.thevalue((selected),true)})
 			}
 			DLock.getExpression = function(id) {
 				var expressions = Calc.getState().expressions.list;

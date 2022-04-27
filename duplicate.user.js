@@ -81,7 +81,7 @@ function start(){
                         return(vard.asValue())
                     }
                     else if(vard.args){
-                        return('\left['+vard.asValue()+'\right]')
+                        return('\\left['+vard.asValue()+'\\right]')
                     }
                 }
 

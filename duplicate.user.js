@@ -96,7 +96,7 @@ function start(){
 					return
 				}
 				var saveid=Calc.controller.__nextItemId
-				Calc.controller.dispatch({type: "duplicate-expression",id:Calc.selectedExpressionId});
+				Calc.controller.dispatch({type: "duplicate-expression",id:selected});
 				Calc.setExpression({id:saveid,latex:DLock.thevalue((selected),true)})
 			}
 			DLock.getExpression = function(id) {

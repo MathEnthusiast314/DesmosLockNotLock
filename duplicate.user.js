@@ -73,12 +73,7 @@ function start(){
                             }
                         }
                     }else if(vard._constantValue){
-                        var regressed=vard._constantValue;
-                        if (typeof(regressed)=='number'){
-                            return(regressed)
-                        }else{
-                            return(regressed.n)
-                        }
+                        return(vard.asValue())
                     }
                 }
 

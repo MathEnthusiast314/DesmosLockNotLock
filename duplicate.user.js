@@ -26,7 +26,7 @@ function start(){
                     statements: {},
                 };
                 for (let stmt of Calc.controller.getAllItemModels()) {
-                    if (stmt.type !== "expression") continue;
+                    if (stmt.type !== "expression" && stmt.type !== "table") continue;
                     changeSet.statements[stmt.id] = stmt;
                 }
                 context.processChangeSet(changeSet);
@@ -74,6 +74,9 @@ function start(){
                         }
                     }else if(vard._constantValue){
                         return(vard.asValue())
+                    }
+                    else if(vard.args){
+                        return('\left['+vard.asValue()+'\right]')
                     }
                 }
 

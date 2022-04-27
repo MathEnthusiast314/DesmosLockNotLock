@@ -27,6 +27,11 @@ function start(){
                 };
                 for (let stmt of Calc.controller.getAllItemModels()) {
                     if (stmt.type !== "expression" && stmt.type !== "table") continue;
+		    if (stmt.type == "table"){
+		        stmt.columns.forEach(function (value0, i0) {
+		            value0.latex = stmt.columnModels[i0].latex
+		        });
+		    }
                     changeSet.statements[stmt.id] = stmt;
                 }
                 context.processChangeSet(changeSet);

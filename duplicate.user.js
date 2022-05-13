@@ -49,34 +49,43 @@ function start(){
                 }
                 if (vard) {
                     if (vard.userData) {
-                        var Depend = vard._dependencies.filter((e) => !vard._dummyDependencies.includes(e) && (e.includes('_') || (e.length == 1 && e != 'e')))
-                        var varname=vard._symbol
-                        if (varname){
-                            varname=varname.replace(/_(.*)/,'_\\{$1\\}')
-                        }
-                        var removeeq = new RegExp(varname + ' *= *(.*)', "g")
-                        var matched = Array.from(vard._inputSpan.input.matchAll(removeeq))
-                        let finalstr;
-                        if (matched.length==0&&first){
-                            finalstr=vard._inputSpan.input
-                        }else if (matched.length>0){
-                            finalstr = matched[0][1]
-                        }
-                        if (finalstr) {
-                            if (Depend.length == 0) {
-                                return (finalstr)
-                            } else {
-                                Depend.forEach(function(item, index) {
-                                    let vval = DLock.thevalue(item);
-                                    if (vval != undefined) {
-                                        item=item.replace(/_(.*)/,'_\\{$1\\}')
-                                        var re = new RegExp('(?<![a-z\\_\{])'+item+'(?![a-su-w_\}])', "g")
-                                        finalstr = finalstr.replace(re, '\\left(' + vval.toString() + '\\right)')
-                                    }
-                                });
-                                return (finalstr)
+			var expranalysis = Calc.expressionAnalysis[vard.userData.id].evaluation
+                        if (expranalysis!=undefined){
+                            if (expranalysis.value.length==undefined){
+                                return(expranalysis.value)
+                            }else{
+                                return('\\left['+expranalysis.value+'\\right]')
                             }
-                        }
+                        }else{
+				var Depend = vard._dependencies.filter((e) => !vard._dummyDependencies.includes(e) && (e.includes('_') || (e.length == 1 && e != 'e')))
+				var varname=vard._symbol
+				if (varname){
+				    varname=varname.replace(/_(.*)/,'_\\{$1\\}')
+				}
+				var removeeq = new RegExp(varname + ' *= *(.*)', "g")
+				var matched = Array.from(vard._inputSpan.input.matchAll(removeeq))
+				let finalstr;
+				if (matched.length==0&&first){
+				    finalstr=vard._inputSpan.input
+				}else if (matched.length>0){
+				    finalstr = matched[0][1]
+				}
+				if (finalstr) {
+				    if (Depend.length == 0) {
+					return (finalstr)
+				    } else {
+					Depend.forEach(function(item, index) {
+					    let vval = DLock.thevalue(item);
+					    if (vval != undefined) {
+						item=item.replace(/_(.*)/,'_\\{$1\\}')
+						var re = new RegExp('(?<![a-z\\_\{])'+item+'(?![a-su-w_\}])', "g")
+						finalstr = finalstr.replace(re, '\\left(' + vval.toString() + '\\right)')
+					    }
+					});
+					return (finalstr)
+				    }
+				}
+			}
                     }else if(vard._constantValue){
                         return(vard.asValue())
                     }

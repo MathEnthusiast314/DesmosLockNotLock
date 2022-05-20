@@ -18,7 +18,7 @@ function start(){
 		if (typeof Calc != "undefined") {
             var DLock = {};
             DLock.computeContext = function() {
-                // Emulate what goes on in the web worker
+                // Emulate what goes on in the web worker. Thanks fireflame.
                 const Context = require("core/math/context").Context;
                 const context = new Context();
                 const changeSet = {

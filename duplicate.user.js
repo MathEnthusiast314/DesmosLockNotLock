@@ -19,7 +19,7 @@ function start(){
             var DLock = {};
             DLock.computeContext = function() {
                 // Emulate what goes on in the web worker. Thanks fireflame.
-                const Context = require("core/math/context").Context;
+                const Context = Desmos.Private.Mathtools.context;
                 const context = new Context();
                 const changeSet = {
                     isCompleteState: true,
